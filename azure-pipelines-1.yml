@@ -10,11 +10,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    e.cho Add other tasks to build, test, and deploy your project.
 - task: install-flutter-sdk@0
   inputs:
     channel: 'stable'
+- script: |
+    flutter doctor
+    cd gallery/gallery
+    flutter pub get
+    flutter build apk
