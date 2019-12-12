@@ -16,7 +16,7 @@ steps:
     wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
     mkdir android-sdk-tools
     unzip -qq sdk-tools-linux-4333796.zip -d android-sdk-tools
-    sudo echo "export PATH=$PATH:`pwd`/android-sdk-tools/tools/bin" >> /etc/profile
+    Write-Host "##vso[task.setvariable variable=PATH;]`pwd`/android-sdk-tools/tools/bin"
     mkdir -p /opt/android
     yes | sdkmanager --sdk_root=/opt/android "tools" "build-tools;29.0.2" "extras;android;m2repository" > /dev/null
     echo "export PATH=/opt/android/tools/bin:$PATH" >> /etc/profile
