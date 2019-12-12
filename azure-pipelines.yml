@@ -7,15 +7,21 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macos-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    git clone https://github.com/flutter/flutter.git -b stable
+    ./flutter/bin/flutter doctor
+    export PATH=./flutter/bin:$PATH
+    flutter
+  displayName: 'prepare flutter'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    flutter build apk
+  workingDirectory: ./gallery/gallery/
+  displayName: 'Build'
+
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
