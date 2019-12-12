@@ -11,21 +11,22 @@ pool:
 
 steps:
 - script: |
-    mkdir -p /home/travis/.android
-    echo 'count=0' > /home/travis/.android/repositories.cfg
+    mkdir -p /home/vsts/.android
+    echo 'count=0' > /home/vsts/.android/repositories.cfg
     wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
     mkdir android-sdk-tools
     unzip -qq sdk-tools-linux-4333796.zip -d android-sdk-tools
-    export PATH=`pwd`/android-sdk-tools/tools/bin:$PATH
+    sudo echo "export PATH=$PATH:`pwd`/android-sdk-tools/tools/bin" >> /etc/profile
     mkdir -p /opt/android
     yes | sdkmanager --sdk_root=/opt/android "tools" "build-tools;29.0.2" "extras;android;m2repository" > /dev/null
-    export PATH=/opt/android/tools/bin:$PATH
+    echo "export PATH=/opt/android/tools/bin:$PATH" >> /etc/profile
     sdkmanager --list
+    echo $PATH
   displayName: 'Prepare android sdk'
 
 - script: |
-    git clone https://github.com/flutter/flutter.git -b stable
-    export PATH=./flutter/bin:$PATH
+    git clone https://github.com/flutter/flutter.git -b master
+    sudo echo "export PATH=./flutter/bin:$PATH" >> /etc/profile
     flutter doctor -v
     echo $PATH
   displayName: 'prepare flutter'
