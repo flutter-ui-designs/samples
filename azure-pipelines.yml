@@ -11,16 +11,29 @@ pool:
 
 steps:
 - script: |
+    wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+    mkdir android-sdk-tools
+    unzip -qq sdk-tools-linux-4333796.zip -d android-sdk-tools
+    export PATH=`pwd`/android-sdk-tools/tools/bin:$PATH
+    mkdir -p /opt/android
+    yes | sdkmanager --sdk_root=/opt/android "tools" "build-tools;29.0.2" "extras;android;m2repository" > /dev/null
+    export PATH=/opt/android/tools/bin:$PATH
+    sdkmanager --list
+  displayName: 'Prepare android sdk'
+
+- script: |
     git clone https://github.com/flutter/flutter.git -b stable
-    ./flutter/bin/flutter doctor
     export PATH=./flutter/bin:$PATH
     flutter
   displayName: 'prepare flutter'
 
+- checkout: self
+
 - script: |
+    flutter pub get
     flutter build apk
   workingDirectory: ./gallery/gallery/
-  displayName: 'Build'
+  displayName: 'Build apk'
 
 - task: PublishPipelineArtifact@1
   inputs:
