@@ -16,17 +16,17 @@ steps:
     wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
     mkdir android-sdk-tools
     unzip -qq sdk-tools-linux-4333796.zip -d android-sdk-tools
-    ##vso[task.setvariable variable=PATH;]`pwd`/android-sdk-tools/tools/bin
+    ##vso[task.setvariable variable=PATH;]${PATH}:`pwd`/android-sdk-tools/tools/bin
     mkdir -p /opt/android
     yes | sdkmanager --sdk_root=/opt/android "tools" "build-tools;29.0.2" "extras;android;m2repository" > /dev/null
-    echo "export PATH=/opt/android/tools/bin:$PATH" >> /etc/profile
+    ##vso[task.setvariable variable=PATH;]${PATH}:/opt/android/tools/bin
     sdkmanager --list
     echo $PATH
   displayName: 'Prepare android sdk'
 
 - script: |
     git clone https://github.com/flutter/flutter.git -b master
-    sudo echo "export PATH=./flutter/bin:$PATH" >> /etc/profile
+    ##vso[task.setvariable variable=PATH;]${PATH}:./flutter/bin
     flutter doctor -v
     echo $PATH
   displayName: 'prepare flutter'
