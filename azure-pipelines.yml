@@ -24,12 +24,13 @@ steps:
 - script: |
     git clone https://github.com/flutter/flutter.git -b stable
     export PATH=./flutter/bin:$PATH
-    flutter
+    flutter doctor -v
   displayName: 'prepare flutter'
 
 - checkout: self
 
 - script: |
+    flutter
     flutter pub get
     flutter build apk
   workingDirectory: ./gallery/gallery/
