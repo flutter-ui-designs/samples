@@ -27,6 +27,7 @@ steps:
     git clone https://github.com/flutter/flutter.git -b stable
     export PATH=./flutter/bin:$PATH
     flutter doctor -v
+    echo $PATH
   displayName: 'prepare flutter'
 
 - checkout: self
