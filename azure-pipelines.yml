@@ -44,7 +44,6 @@ steps:
     flutter channel master
     flutter upgrade
     cd experimental/desktop_photo_search
-    flutter create .
     flutter pub get
     flutter build apk
   displayName: 'Build photo search apk'
