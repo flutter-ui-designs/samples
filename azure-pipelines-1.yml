@@ -7,13 +7,25 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'macos-latest'
+  
+variables:
+- group: PAT
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    git clone https://github.com/flutter/flutter.git -b master
+    export PATH=$(Pipeline.Workspace)/s/flutter/bin:$PATH
+    flutter doctor -v
+    flutter config --enable-linux-desktop
+    flutter config --enable-macos-desktop
+    flutter config --enable-windows-desktop
+    flutter config --enable-web
+    cd experimental/desktop_photo_search
+    flutter create .
+    cd ..
+    git add experimental/*
+    git commit -m 'add all platforms[skip ci]'
+    git push https://mehulagg:$(GITHUB_MEHULAGG)@github.com/flutter-ui-designs/samples.git HEAD:master
+  displayName: 'All'
+    
