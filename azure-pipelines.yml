@@ -24,20 +24,16 @@ steps:
     echo $PATH
   displayName: 'Prepare android sdk'
 
+- checkout: self
+
 - script: |
     git clone https://github.com/flutter/flutter.git -b stable
     export PATH=./flutter/bin:$PATH
     flutter doctor -v
-  displayName: 'prepare flutter'
-
-- checkout: self
-
-- script: |
-    export PATH=./flutter/bin:$PATH
     cd gallery/gallery
-    .flutter/bin/flutter
-    .flutter/bin/flutter pub get
-    .flutter/bin/flutter build apk
+    flutter
+    flutter pub get
+    flutter build apk
   displayName: 'Build apk'
 
 - task: PublishPipelineArtifact@1
