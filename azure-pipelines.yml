@@ -35,9 +35,9 @@ steps:
 - script: |
     export PATH=./flutter/bin:$PATH
     cd gallery/gallery
-    flutter
-    flutter pub get
-    flutter build apk
+    .flutter/bin/flutter
+    .flutter/bin/flutter pub get
+    .flutter/bin/flutter build apk
   displayName: 'Build apk'
 
 - task: PublishPipelineArtifact@1
