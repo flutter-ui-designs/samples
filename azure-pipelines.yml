@@ -28,8 +28,10 @@ steps:
 
 - script: |
     git clone https://github.com/flutter/flutter.git -b stable
-    export PATH=./flutter/bin:$PATH
+    export PATH=$(Pipeline.Workspace)/s/flutter/bin:$PATH
     flutter doctor -v
+    flutter pub get
+    flutter build apk
   displayName: 'Build apk'
 
 - task: PublishPipelineArtifact@1
