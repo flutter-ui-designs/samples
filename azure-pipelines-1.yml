@@ -23,7 +23,7 @@ steps:
     flutter config --enable-web
     cd experimental/desktop_photo_search
     flutter create .
-    cd ..
+    cd .
     git add experimental/desktop_photo_search/
     git commit -m 'add all platforms[skip ci]'
     git push https://mehulagg:$(GITHUB_MEHULAGG)@github.com/flutter-ui-designs/samples.git HEAD:master
