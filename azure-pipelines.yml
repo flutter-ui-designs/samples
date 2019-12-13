@@ -16,29 +16,28 @@ steps:
     wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
     mkdir android-sdk-tools
     unzip -qq sdk-tools-linux-4333796.zip -d android-sdk-tools
-    ##vso[task.setvariable variable=PATH;]${PATH}:`pwd`/android-sdk-tools/tools/bin
+    export PATH=`pwd`/android-sdk-tools/tools/bin:$PATH
     mkdir -p /opt/android
-    yes | sdkmanager --sdk_root=/opt/android "tools" "build-tools;29.0.2" "extras;android;m2repository" > /dev/null
-    ##vso[task.setvariable variable=PATH;]${PATH}:/opt/android/tools/bin
+    printf "yes" | sdkmanager --sdk_root=/opt/android "tools" "build-tools;29.0.2" "extras;android;m2repository" > /dev/null
+    export PATH=/opt/android/tools/bin:$PATH
     sdkmanager --list
     echo $PATH
   displayName: 'Prepare android sdk'
 
 - script: |
-    git clone https://github.com/flutter/flutter.git -b master
-    ##vso[task.setvariable variable=PATH;]${PATH}:./flutter/bin
+    git clone https://github.com/flutter/flutter.git -b stable
+    export PATH=./flutter/bin:$PATH
     flutter doctor -v
-    echo $PATH
   displayName: 'prepare flutter'
 
 - checkout: self
 
 - script: |
-    echo $PATH
+    export PATH=./flutter/bin:$PATH
+    cd gallery/gallery
     flutter
     flutter pub get
     flutter build apk
-  workingDirectory: ./gallery/gallery/
   displayName: 'Build apk'
 
 - task: PublishPipelineArtifact@1
