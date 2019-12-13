@@ -30,10 +30,22 @@ steps:
     git clone https://github.com/flutter/flutter.git -b stable
     export PATH=$(Pipeline.Workspace)/s/flutter/bin:$PATH
     flutter doctor -v
+  displayName: 'Prepare flutter'
+
+- script: |
+    export PATH=$(Pipeline.Workspace)/s/flutter/bin:$PATH
     cd gallery/gallery
     flutter pub get
     flutter build apk
-  displayName: 'Build apk'
+  displayName: 'Build gallery apk'
+
+- script: |
+    export PATH=$(Pipeline.Workspace)/s/flutter/bin:$PATH
+    cd experimental/desktop_photo_search
+    flutter create .
+    flutter pub get
+    flutter build apk
+  displayName: 'Build photo search apk'
 
 - task: PublishPipelineArtifact@1
   inputs:
