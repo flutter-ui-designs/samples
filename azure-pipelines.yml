@@ -41,6 +41,8 @@ steps:
 
 - script: |
     export PATH=$(Pipeline.Workspace)/s/flutter/bin:$PATH
+    flutter channel master
+    flutter upgrade
     cd experimental/desktop_photo_search
     flutter create .
     flutter pub get
