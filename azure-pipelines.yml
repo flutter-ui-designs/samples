@@ -30,10 +30,6 @@ steps:
     git clone https://github.com/flutter/flutter.git -b stable
     export PATH=./flutter/bin:$PATH
     flutter doctor -v
-    cd gallery/gallery
-    flutter
-    flutter pub get
-    flutter build apk
   displayName: 'Build apk'
 
 - task: PublishPipelineArtifact@1
